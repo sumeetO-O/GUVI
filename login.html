@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="js/login.js"></script>
+    <title>LOGIN</title>
+</head>
+<body>
+    <div class="alert alert-success alert-dismissible shadow-sm rounded fade" role="alert">
+        <strong>Success!</strong> You are logged in successfully 🥳
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" role="alert">
+        <strong>Error!</strong> Incorrect Password
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-info alert-dismissible shadow-sm rounded fade in" style="z-index: 999;" role="alert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <p></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="container mt-3">
+        <h3 class="text-center pb-4">LOGIN</h3>
+        
+        <form id="sign-in-form" name="sign-in-form" class="card row g-3 needs-validation shadow p-3 mb-5 bg-body" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustomUsername" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend">@</span>
+                  <input name="username" type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                  <div class="invalid-feedback">
+                    Please type a valid username.
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+              <label for="validationCustom02" class="form-label">Password</label>
+              <input name="pass" type="password" class="form-control" id="validationCustom02" autocomplete="true" required>
+              <div class="invalid-feedback">
+                Please type a valid password
+              </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                  <input name="remember" class="form-check-input checkbox rememberMe" type="checkbox" value="" id="invalidCheck">
+                  <label class="form-check-label" for="invalidCheck">
+                    Remember me
+                  </label>
+                </div>
+              </div>
+            <div class="col-12">
+              <button class="btn btn-success" id="login" type="submit">Login</button>
+            </div>
+          </form>
+          <!-- Sign In link -->
+        <div class="text-center mt-3">
+            <span class="sign-up-link">Not a member? <a href="#" id="signup_btn">Sign up now</a> </span>
+        </div>
+    </div>
+</body>
+</html>

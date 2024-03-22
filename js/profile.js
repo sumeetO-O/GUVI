@@ -56,6 +56,7 @@ $(document).ready(() => {
             show_alert("info", msg, alert_show_time);
         }
     }
+
     // END : Alert functions ends  -----------------------------------------------------
 
 
@@ -71,10 +72,7 @@ $(document).ready(() => {
         success: function(response) {
             console.log(response);
             if (response.status != 'error') {
-                $first_name = response.fname.split(" ")[0];
-                $("#first_name").html($first_name);
                 $("#username").html("@"+$username);
-                $("#full_name").val(response.fname);
                 if(response.email != "" && response.email != null) $("#email").val(response.email);
                 if(response.contact != "" && response.contact != null) $("#contact").val(response.contact);
                 if(response.age != "" && response.age != null) $("#age").val(response.age);
@@ -85,6 +83,10 @@ $(document).ready(() => {
                 if(response.education != "" && response.education != null) $("#education").attr("value", response.education);
                 if(response.country != "" && response.country != null) $("#country").attr("value", response.country);
                 if(response.description != "" && response.description != null) $("#description").attr("value", response.description);
+                if(response.fname != "" && response.fname != null) $("#fname").val(response.fname);
+
+                $first_name = response.fname.split(" ")[0];
+                $("#first_name").html($first_name);
 
                 $("input").each(function() {
                     if ($(this).val() !== "") {
@@ -104,13 +106,49 @@ $(document).ready(() => {
 
     // SAVE_PROFILE BUTTON FUNCTION -------------------
 
-
+    $('#save_profile').click(function(e) {
+        e.preventDefault();
+        // Perform form submission here
+        var formData = $("#user_profile_form").serialize();
+        console.log(formData);
+        $user = localStorage.getItem('username');
+        $.ajax({
+            url: "./php/profile.php",
+            method: 'POST',
+            dataType: "json",
+            data: formData + "&username=" + $user + "&action=push",
+            error: function(xhr, status, error) {
+                responder(error, "info", 2000);
+            }
+        }).done((response) => {
+            var data = response;
+            responder(data.msg, data.status, 20000);
+            if(data.status == "success"){
+                console.log(response);
+                setTimeout(() => {
+                    location.reload(true);
+                }, 1000);
+            }
+        });
+    });
 
     // END ------------------------------------
 
+    // Edit Profile Button --------------------------------
+
+    $("#edit_profile").click((e) => {
+        e.preventDefault();
+        // Make all the input fields to "disabled = false" --------------------------------
+        $("input").each(function() {
+            $(this).prop("disabled", false);
+        });
+    });
+
+    // ----------------------------------------------------
+
 
     // LOGOUT BUTTON FUNCTION -------------------
-    $('#logoutBtn').click(function() {
+    $('#logoutBtn').click(function(e) {
         e.preventDefault();
         // Clear the login status from local storage
         $username = localStorage.getItem('username');

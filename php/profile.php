@@ -73,5 +73,66 @@
         echo json_encode(["status" => "success", "msg" => "<b>LOGGING OUT!</b> See you soon!"]);
     }
 
+    if(isset($_POST['action']) && ($_POST['action'] == 'push')) {
+
+        // Include the MongoDB PHP library
+        require_once __DIR__ . '/../vendor/autoload.php';
+
+        // Establish connection to MongoDB server
+        $databaseConnection = new MongoDB\Client;
+
+        // Select database
+        $myDatabase = $databaseConnection->user_profile;
+
+        // Select a collection
+        $userCollection = $myDatabase->profiles;
+
+        if($userCollection){
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Retrieve username and additional data from POST request
+                $username = $_POST['username'];
+                $additionalData = array();
+
+                if(isset($_POST['address'])) { $additionalData['address'] = $_POST['address']; }
+                if(isset($_POST['postcode'])) { $additionalData['postcode'] = $_POST['postcode']; }
+                if(isset($_POST['state'])) { $additionalData['state'] = $_POST['state']; }
+                if(isset($_POST['education'])) { $additionalData['education'] = $_POST['education']; }
+                if(isset($_POST['country'])) { $additionalData['country'] = $_POST['country']; }
+                if(isset($_POST['description'])) { $additionalData['description'] = $_POST['description']; }
+                if(isset($_POST['fname'])) { $additionalData['fname'] = $_POST['fname']; }
+                if(isset($_POST['dob'])) { $additionalData['dob'] = $_POST['dob']; }
+                if(isset($_POST['age'])) { $additionalData['age'] = $_POST['age']; }
+                if(isset($_POST['contact'])) { $additionalData['contact'] = $_POST['contact']; }
+                if(isset($_POST['email'])) { $additionalData['email'] = $_POST['email']; }
+
+
+                // Query the collection to find the document with the given username
+                $userData = $userCollection->findOne(['username' => $username]);
+
+                if($userData) {
+                    // Update the document with additional data
+                    $updateResult = $userCollection->updateOne(
+                        ['username' => $username],
+                        ['$set' => $additionalData]
+                    );
+
+                    if($updateResult->getModifiedCount() > 0) {
+                        // Data updated successfully
+                        echo json_encode(["status" => "success", "msg" => "Data updated successfully 🥳"]);
+                    } else {
+                        // Failed to update data
+                        echo json_encode(["status" => "error", "msg" => "Failed to update the data 😞"]);
+                    }
+                } else {
+                    // User not found
+                    echo json_encode(["status" => "info", "msg" => "User not found"]);
+                }
+            }
+        } else {
+            echo "Failed to connect to the database";
+        }
+
+    }
+
 
 ?>

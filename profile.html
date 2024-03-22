@@ -7,11 +7,11 @@
 <body>
      <!--Defining ALERT boxes-->
      <div class="alert alert-success alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Success!</strong> User registered successfully 🥳
+        <strong>Success!</strong> Data updated successfully 🥳
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Error!</strong> Username already exists
+        <strong>Error!</strong> Failed to update the data 😞
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div class="alert alert-warning alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
@@ -26,7 +26,7 @@
     <!--------------------------------------->
 
     <div class="container rounded bg-white mt-3 mb-3">
-        <form class="card row">
+        <form name="user_profile_form" id="user_profile_form" class="card row">
             <div class="lbtn">
                 <button id="logoutBtn" class="btn btn-danger shadow-sm px-4 py-2 rounded"><b>Logout</b></button>
             </div>
@@ -39,7 +39,7 @@
                         <h4 class="text-right">Profile</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels pb-1">Full Name</label><input name="full_name" id="full_name" type="text" class="form-control" placeholder="Full Name" value="" required></div>
+                        <div class="col-md-12"><label class="labels pb-1">Full Name</label><input name="fname" id="fname" type="text" class="form-control" placeholder="Full Name" value="" required></div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-md-12"><label class="labels py-1">Mobile Number</label><input name="contact" id="contact" type="tel" class="form-control" placeholder="enter phone number" value="" required pattern="[+][0-9]{10,14}"></div>
@@ -55,211 +55,19 @@
                         <div class="col-md-6 "><label class="labels py-1">Country</label><input name="country" id="country" type="text" class="form-control" placeholder="country" value=""></div>
                         <div class="col-md-6"><label class="labels py-2">Description</label><input name="description" id="description" type="text" class="form-control" value="" placeholder="Type your description" style="height: 100px;"></div>
                     </div>
-                    <div class="mt-5 text-center"><button id="save_profile" class="btn btn-success" type="button" >Save Profile</button></div>
-                </div>
-            </div>
-        </form>
-    </div>
-    </div>
-    </div>
-
-    <script src="js/profile.js"></script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>PROFILE</title>
-    <link rel="stylesheet" href="css/profile.css"/>
-</head>
-<body>
-     <!--Defining ALERT boxes-->
-     <div class="alert alert-success alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Success!</strong> User registered successfully 🥳
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Error!</strong> Username already exists
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Email already Exists!</strong> You can <a href="login.html" class="alert-link">SIGN IN</a>.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-info alert-dismissible shadow-sm rounded fade in" style="z-index: 999;" role="alert">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <p></p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <!--------------------------------------->
-
-    <div class="container rounded bg-white mt-3 mb-3">
-        <form class="card row">
-            <div class="lbtn">
-                <button id="logoutBtn" class="btn btn-danger shadow-sm px-4 py-2 rounded"><b>Logout</b></button>
-            </div>
-            <div class="col-md-3">
-                <div class="d-flex flex-column align-items-center text-center p-3 pb-2 pt-4"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="first_name" class="font-weight-bold" style="font-weight: 500;">Edogaru</span><span id="username" class="text-black-50">@username</span><span> </span></div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile</h4>
+                    <div class="row mt-5">
+                        <div class="col text-start">
+                            <button id="edit_profile" class="btn btn-primary" type="button" style="font-weight: 500; padding: 10px 15px;">
+                                <i class="bi bi-pencil-fill" style="margin-right: 0.4rem !important;"></i> Edit Profile
+                            </button>
+                        </div>
+                        <div class="col text-end">
+                            <button id="save_profile" class="btn btn-success" type="button" style="font-weight: 500; padding: 10px 15px;">
+                                <i class="bi bi-floppy-fill" style="margin-right: 0.4rem !important;"></i> Save Profile
+                            </button>
+                        </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels pb-1">Full Name</label><input name="full_name" id="full_name" type="text" class="form-control" placeholder="Full Name" value="" required></div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-12"><label class="labels py-1">Mobile Number</label><input name="contact" id="contact" type="tel" class="form-control" placeholder="enter phone number" value="" required pattern="[+][0-9]{10,14}"></div>
-                        <div class="col-md-12"><label class="labels py-2">Date Of Birth</label><input name="dob" id="dob" type="date" class="form-control" placeholder="enter DOB" value=""></div>
-                        <div class="col-md-12"><label class="labels py-2">Age</label><input name="age" id="age" type="number" class="form-control" placeholder="enter age" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Email</label><input id="email" name="email" type="email" class="form-control" placeholder="enter Email" value="" required></div>
-                        <div class="col-md-12"><label class="labels py-1">Address</label><input name="address" id="address" type="text" class="form-control" placeholder="enter address" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Postcode</label><input name="postcode" id="postcode" type="text" class="form-control" placeholder="enter postcode" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">State</label><input name="state" id="state" type="text" class="form-control" placeholder="enter state" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Education</label><input name="education" id="education" type="text" class="form-control" placeholder="education" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6 "><label class="labels py-1">Country</label><input name="country" id="country" type="text" class="form-control" placeholder="country" value=""></div>
-                        <div class="col-md-6"><label class="labels py-2">Description</label><input name="description" id="description" type="text" class="form-control" value="" placeholder="Type your description" style="height: 100px;"></div>
-                    </div>
-                    <div class="mt-5 text-center"><button id="save_profile" class="btn btn-success" type="button" >Save Profile</button></div>
-                </div>
-            </div>
-        </form>
-    </div>
-    </div>
-    </div>
-
-    <script src="js/profile.js"></script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>PROFILE</title>
-    <link rel="stylesheet" href="css/profile.css"/>
-</head>
-<body>
-     <!--Defining ALERT boxes-->
-     <div class="alert alert-success alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Success!</strong> User registered successfully 🥳
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Error!</strong> Username already exists
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Email already Exists!</strong> You can <a href="login.html" class="alert-link">SIGN IN</a>.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-info alert-dismissible shadow-sm rounded fade in" style="z-index: 999;" role="alert">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <p></p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <!--------------------------------------->
-
-    <div class="container rounded bg-white mt-3 mb-3">
-        <form class="card row">
-            <div class="lbtn">
-                <button id="logoutBtn" class="btn btn-danger shadow-sm px-4 py-2 rounded"><b>Logout</b></button>
-            </div>
-            <div class="col-md-3">
-                <div class="d-flex flex-column align-items-center text-center p-3 pb-2 pt-4"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="first_name" class="font-weight-bold" style="font-weight: 500;">Edogaru</span><span id="username" class="text-black-50">@username</span><span> </span></div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile</h4>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels pb-1">Full Name</label><input name="full_name" id="full_name" type="text" class="form-control" placeholder="Full Name" value="" required></div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-12"><label class="labels py-1">Mobile Number</label><input name="contact" id="contact" type="tel" class="form-control" placeholder="enter phone number" value="" required pattern="[+][0-9]{10,14}"></div>
-                        <div class="col-md-12"><label class="labels py-2">Date Of Birth</label><input name="dob" id="dob" type="date" class="form-control" placeholder="enter DOB" value=""></div>
-                        <div class="col-md-12"><label class="labels py-2">Age</label><input name="age" id="age" type="number" class="form-control" placeholder="enter age" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Email</label><input id="email" name="email" type="email" class="form-control" placeholder="enter Email" value="" required></div>
-                        <div class="col-md-12"><label class="labels py-1">Address</label><input name="address" id="address" type="text" class="form-control" placeholder="enter address" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Postcode</label><input name="postcode" id="postcode" type="text" class="form-control" placeholder="enter postcode" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">State</label><input name="state" id="state" type="text" class="form-control" placeholder="enter state" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Education</label><input name="education" id="education" type="text" class="form-control" placeholder="education" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6 "><label class="labels py-1">Country</label><input name="country" id="country" type="text" class="form-control" placeholder="country" value=""></div>
-                        <div class="col-md-6"><label class="labels py-2">Description</label><input name="description" id="description" type="text" class="form-control" value="" placeholder="Type your description" style="height: 100px;"></div>
-                    </div>
-                    <div class="mt-5 text-center"><button id="save_profile" class="btn btn-success" type="button" >Save Profile</button></div>
-                </div>
-            </div>
-        </form>
-    </div>
-    </div>
-    </div>
-
-    <script src="js/profile.js"></script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>PROFILE</title>
-    <link rel="stylesheet" href="css/profile.css"/>
-</head>
-<body>
-     <!--Defining ALERT boxes-->
-     <div class="alert alert-success alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Success!</strong> User registered successfully 🥳
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Error!</strong> Username already exists
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-warning alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
-        <strong>Email already Exists!</strong> You can <a href="login.html" class="alert-link">SIGN IN</a>.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <div class="alert alert-info alert-dismissible shadow-sm rounded fade in" style="z-index: 999;" role="alert">
-        <i class="bi bi-exclamation-circle-fill"></i>
-        <p></p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <!--------------------------------------->
-
-    <div class="container rounded bg-white mt-3 mb-3">
-        <form class="card row">
-            <div class="lbtn">
-                <button id="logoutBtn" class="btn btn-danger shadow-sm px-4 py-2 rounded"><b>Logout</b></button>
-            </div>
-            <div class="col-md-3">
-                <div class="d-flex flex-column align-items-center text-center p-3 pb-2 pt-4"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="first_name" class="font-weight-bold" style="font-weight: 500;">Edogaru</span><span id="username" class="text-black-50">@username</span><span> </span></div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile</h4>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels pb-1">Full Name</label><input name="full_name" id="full_name" type="text" class="form-control" placeholder="Full Name" value="" required></div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-12"><label class="labels py-1">Mobile Number</label><input name="contact" id="contact" type="tel" class="form-control" placeholder="enter phone number" value="" required pattern="[+][0-9]{10,14}"></div>
-                        <div class="col-md-12"><label class="labels py-2">Date Of Birth</label><input name="dob" id="dob" type="date" class="form-control" placeholder="enter DOB" value=""></div>
-                        <div class="col-md-12"><label class="labels py-2">Age</label><input name="age" id="age" type="number" class="form-control" placeholder="enter age" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Email</label><input id="email" name="email" type="email" class="form-control" placeholder="enter Email" value="" required></div>
-                        <div class="col-md-12"><label class="labels py-1">Address</label><input name="address" id="address" type="text" class="form-control" placeholder="enter address" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Postcode</label><input name="postcode" id="postcode" type="text" class="form-control" placeholder="enter postcode" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">State</label><input name="state" id="state" type="text" class="form-control" placeholder="enter state" value=""></div>
-                        <div class="col-md-12"><label class="labels py-1">Education</label><input name="education" id="education" type="text" class="form-control" placeholder="education" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6 "><label class="labels py-1">Country</label><input name="country" id="country" type="text" class="form-control" placeholder="country" value=""></div>
-                        <div class="col-md-6"><label class="labels py-2">Description</label><input name="description" id="description" type="text" class="form-control" value="" placeholder="Type your description" style="height: 100px;"></div>
-                    </div>
-                    <div class="mt-5 text-center"><button id="save_profile" class="btn btn-success" type="button" >Save Profile</button></div>
+                    
                 </div>
             </div>
         </form>

@@ -1,6 +1,6 @@
 .alert {
     display: none;
-    position: absolute;
+    position: fixed !important;
     width: 90%;
     margin: 10px;
     left: calc(50% - 47vw);

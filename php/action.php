@@ -1,6 +1,12 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require 'login.php';
+
+use Predis\Client;
+
+// SO now i am initializing Redis client
+$redis = new Client();
 
 $response = ["status" => "", "msg" => ""];
 function isValidUsername($username) {
@@ -78,14 +84,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Check if Remember Me is checked
                 if (isset($_POST['remember'])) {
-                    // Generate a random token
+                    // Creating session data
+                    $sessionData = [
+                        "username" => $existingUser["username"],
+                        // Add other session data as needed
+                    ];
+
+                    // Generate a unique session ID
                     $token = bin2hex(random_bytes(32));
+
+                    // Set session data in Redis
+                    $redis->setex("token:$token", 86400, json_encode($sessionData)); // Session expires in 24 hours (86400 seconds)
+
+                    // Set session ID in a cookie
+                    setcookie("token", $token, time() + 86400, "/"); // Cookie expires in 24 hours
+                    // Generate a random token
                     
-                    // Store the token in the database
+                    // Store the token in the SQL database too (JUST)
                     $objUser->setRememberToken($existingUser["id"], $token);
                     
-                    // Set a cookie with the token  
-                    setcookie('token', $token, time() + (86400 * 30), "/"); // 30 days
                     $response = ["username" => $existingUser["username"], "status" => "success", "msg" => "Login successful", "sessionToken" => $token];
                 }
             } else {
@@ -99,19 +116,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function userValidate($username, $token) {
-    // Create a new User object
-    $user = new User();
+// function userValidate($username, $token) {
+//     // Create a new User object
+//     $user = new User();
     
-    // Get user data by username
-    $userData = $user->getUserByUsername($username);
+//     // Get user data by username
+//     $userData = $user->getUserByUsername($username);
 
-    // Check if user data exists and token matches
-    if ($userData && $userData['token'] === $token) {
-        return true; // Username and token match
-    } else {
-        return false; // Username or token does not match
+//     // Check if user data exists and token matches
+//     if ($userData && $userData['token'] === $token) {
+//         return true; // Username and token match
+//     } else {
+//         return false; // Username or token does not match
+//     }
+// }
+
+function userValidate($username, $token) {
+    global $redis;
+
+    // Get session data from Redis using the token as key
+    $sessionData = $redis->get("token:$token");
+
+    // Check if session data exists and the username matches
+    if ($sessionData) {
+        $sessionData = json_decode($sessionData, true);
+        return $sessionData["username"] === $username;
     }
+
+    return false;
 }
 
 function validateLoginForm() {

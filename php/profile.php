@@ -1,9 +1,10 @@
 <?php
     error_reporting(E_ERROR | E_PARSE);
-    
+    // Include the MongoDB PHP & Redis library
+    require_once __DIR__ . '/../vendor/autoload.php';
+    use Predis\Client;
+
     if (isset($_GET['action']) && ($_GET['action'] == 'fetch')) {
-        // Include the MongoDB PHP library
-        require_once __DIR__ . '/../vendor/autoload.php';
 
         // Establish connection to MongoDB server
         $databaseConnection = new MongoDB\Client;
@@ -63,8 +64,46 @@
     }
 
     if(isset($_GET['action']) && ($_GET['action'] == 'logout')) {
+        
+        // Connect to Redis server (replace '127.0.0.1' and '6379' with your Redis server host and port)
+        $redis = new Client([
+            'scheme' => 'tcp',
+            'host'   => '127.0.0.1',
+            'port'   => 6379,
+        ]);
+
         $username = $_GET['username'];
 
+        // Get all keys from Redis matching the pattern 'token:*'
+        $keys = $redis->keys("token:*");
+
+        $token = null;
+        // Iterate over each key to find the token associated with the username
+        foreach ($keys as $key) {
+            // Extract the username from the key
+            $keyParts = explode(':', $key);
+            if ($keyParts[1] === $username) {
+                // Found the key associated with the username
+                $token = $keyParts[2];
+                break;
+            }
+        }
+        if($token){
+            // Delete the session data from Redis
+            $redis->del($token);
+        }
+
+        // For redis server ----
+        // Check if the user has a token stored in Redis
+        $token = $redis->get("token:$username");
+        if ($token) {
+            // Delete the token from Redis
+            $redis->del("token:$username");
+        }
+
+
+
+        // FOr SQL Server
         require 'login.php';
         $objUser = new User();  // user modal
         $existingUser = $objUser->getUserByUsername($username);

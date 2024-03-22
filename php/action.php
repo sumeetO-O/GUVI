@@ -1,5 +1,7 @@
 <?php
 
+require 'login.php';
+
 $response = ["status" => "", "msg" => ""];
 function isValidUsername($username) {
     return preg_match('/^[a-zA-Z0-9_]{1,20}$/', $username);
@@ -7,7 +9,21 @@ function isValidUsername($username) {
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require 'login.php';
+
+    if(isset($_POST['action']) && ($_POST['action'] == 'validate_user_thorugh_token')) {
+        $username = $_POST['username'];
+        $token = $_POST['token'];
+
+        if(userValidate($username, $token)) {
+            $response = json_encode(["status" => "success", "msg" => "User Validated"]);
+        }
+        else {
+            $response = json_encode(["status" => "error", "msg" => "User Not Validated (Token does not match the user's data)"]);
+        }
+
+        echo $response;
+    }
+
     if(isset($_POST['action']) && ($_POST['action'] == 'register')) {
         $user = validateRegForm();
 
@@ -58,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verify password
             if (password_verify($user["pass"], $existingUser["hash_pass"])) {
                 // Password is correct, login successful
-                $response = ["status" => "success", "msg" => "Login successful"];
+                $response = ["username" => $existingUser["username"], "status" => "success", "msg" => "Login successful"];
 
                 // Check if Remember Me is checked
                 if (isset($_POST['remember'])) {
@@ -80,6 +96,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Return response as JSON
         echo json_encode($response);
+    }
+}
+
+function userValidate($username, $token) {
+    // Create a new User object
+    $user = new User();
+    
+    // Get user data by username
+    $userData = $user->getUserByUsername($username);
+
+    // Check if user data exists and token matches
+    if ($userData && $userData['token'] === $token) {
+        return true; // Username and token match
+    } else {
+        return false; // Username or token does not match
     }
 }
 

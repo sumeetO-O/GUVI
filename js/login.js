@@ -131,26 +131,49 @@ $(document).ready(function () {
                 }
             }).done(function(response){
                 var data = response;
-                console.log();
-                // Login successful, store session token in local storage if Remember Me is checked
-                if ($("#invalidCheck").prop('checked')) {
-                    localStorage.setItem('username', data.username);
-                    localStorage.setItem('sessionToken', data.sessionToken);
-                    localStorage.setItem('isLoggedIn', true);
-                }
+
                 if (data.status == "success") {
+                    console.error(data.username);
+                    // Login successful, store session token in local storage if Remember Me is checked
+                    if ($("#invalidCheck").prop('checked')) {
+                        if (data.username != undefined || data.username != null) {
+                            localStorage.setItem('username', data.username);
+                            localStorage.setItem('sessionToken', data.sessionToken);
+                            localStorage.setItem('isLoggedIn', true);
+                        }
+                        else {
+                            console.error("Username not found in database");
+                            localStorage.clear();
+                        }
+                    }
+                    else {
+                        if (data.username != undefined || data.username != null) {
+                            localStorage.setItem('username', data.username);
+                        }
+                        else {
+                            console.error("Username not found in database");
+                            localStorage.clear();
+                        }
+                    }
                     // Redirect to dashboard or homepage
                     $.ajax({
                         url: "profile.html",
                         method: "GET",
                         success: function(response) {
+                            var data = response;
                             // Replace the content of the signup section with login page content
+                            responder(data.msg, data.status, 2000);
                             $("body").html(response);
                         },
                         error: function(xhr, status, error) {
+                            var data = response;
                             console.error(xhr.responseText);
+                            responder(error, data.msg, 2000);
                         }
                     });
+                }
+                else {
+                    responder(data.msg, data.status, 2000);
                 }
                 
             });

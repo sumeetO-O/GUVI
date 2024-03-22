@@ -139,4 +139,145 @@
 
     <!--                          -->
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/jquery.passwordRequirements.css" />
+    <script src="js/register.js"></script>
+    <script src="js/jquery.passwordRequirements.min.js"></script>
+    <title>REGISTER</title>
+</head>
+<body>
+    <!--Defining ALERT boxes-->
+    <div class="alert alert-success alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
+        <strong>Success!</strong> User registered successfully 🥳
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
+        <strong>Error!</strong> Username already exists
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-warning alert-dismissible shadow-sm rounded fade" style="z-index: 999;" role="alert">
+        <strong>Email already Exists!</strong> You can <a href="login.html" class="alert-link">SIGN IN</a>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-info alert-dismissible shadow-sm rounded fade in" style="z-index: 999;" role="alert">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <p></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <!--------------------------------------->
+
+    <div class="container mt-3" id="registration_form">
+        <h3 class="text-center pb-4">REGISTRATION</h3>
+          
+        <form id="sign-up-form" name="sign-up-form" class="card row g-3 needs-validation p-3" novalidate>
+            <div class="col-md-4">
+                <label for="validationCustomUsername" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend">@</span>
+                  <input name="username" type="text" class="form-control username" id="validationCustomUsername" title="Max 20 letters" aria-describedby="inputGroupPrepend" autocomplete="off" aria-autocomplete="off" required>
+                  <div class="invalid-feedback">
+                    Please choose a valid username. (A-Z, a-z, _, 0-9)
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-envelope-fill"></i></span>
+                    <input name="email" type="email" class="form-control email" id="validationCustom01" aria-describedby="inputGroupPrepend" autocomplete="off" aria-autocomplete="off" required>
+                    <div class="invalid-feedback">
+                        Please type a valid email address
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+              <label for="validationCustom02" class="form-label">Password</label>
+              <input name="pass" type="password" class="form-control pr-password" id="validationCustom02" autocomplete="on" required>
+              <div class="valid-feedback">
+                Looks Strong!
+              </div>
+              <div class="invalid-feedback">
+                Please type a valid password
+              </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom03" class="form-label">Confirm Password</label>
+                <input name="cfm_pass" type="password" class="form-control" id="validationCustom03" autocomplete="on" required>
+                <div class="valid-feedback">
+                  Great (It's a match)!
+                </div>
+                <div class="invalid-feedback">
+                  Password doesn't match
+                </div>
+              </div>
+            
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input checkbox" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                  Agree to terms and conditions
+                </label>
+                <div class="invalid-feedback">
+                  You must agree before submitting.
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-success signup" type="submit">Register</button>
+            </div>
+        </form>
+        <!-- Sign In link -->
+        <div class="text-center mt-3">
+          <span class="sign-in-link">Already have a account? <a href="#" id="login_btn">Sign In</a> </span>
+        </div>
+    </div>
+
+    <!-- EXTRA REGISTRATION DATA --->
+
+    <div class="container mt-2" id="user_data" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title text-center mb-0">User Profile Form</h5>
+                    </div>
+                    <div class="card-body">
+                        <form name="user_profile_form" id="profileForm">
+                          <div class="mb-3">
+                            <label for="fname" class="form-label">Full Name</label>
+                            <input name="fname" type="text" class="form-control" pattern="[A-Za-z ]+" id="fname" placeholder="Full Name" required>
+                        </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input name="age" type="number" class="form-control" id="age" placeholder="Enter your age" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dob" class="form-label">Date of Birth</label>
+                                <input name="dob" type="date" class="form-control" id="dob" name="dob" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">Contact Number</label>
+                                <input name="contact" type="tel" class="form-control" pattern="[0-9]+" id="contact" placeholder="Enter your contact number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="profileImage" class="form-label">Profile Image</label>
+                                <input name="profileImage" type="file" class="form-control" id="profileImage" accept="image/*" required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success" id="profile_submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+    <!--                          -->
+</body>
 </html>

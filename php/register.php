@@ -19,13 +19,22 @@
             $age = $_POST['age'];
             $dob = $_POST['dob'];
             $contact = $_POST['contact'];
+
+            require 'login.php';
+            $objUser = new User();  // user modal
+            // Retrieve user record based on username
+            $existingUser = $objUser->getUserByUsername($username);
+
+            $email = $existingUser["email"];
+            
             
             $data = array(
                 'username' => $username,
                 'fname' => $fname,
                 'age' => $age,
                 'dob' => $dob,
-                'contact' => $contact
+                'contact' => $contact,
+                'email' => $email,
             );
 
             // Inserting data into the collection
